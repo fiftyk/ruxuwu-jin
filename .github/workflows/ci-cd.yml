@@ -14,21 +14,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-
-      - name: Install dependencies
-        run: npm install
-
       - name: Release
         id: release
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build:
-    needs: release  # 依赖于 release 工作流
+    needs: release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
