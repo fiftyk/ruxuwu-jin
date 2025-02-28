@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: '18' # 或者你需要的 Node.js 版本
 
+      - name: Login to npm
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
       - name: Install dependencies
         run: npm install
 
