@@ -1,11 +1,15 @@
 {
-  "name": "0228",
+  "name": "@ruxuwu/jin",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "A description of your package",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -17,5 +21,15 @@
     "typescript": "~5.7.2",
     "vite": "^6.2.0",
     "vue-tsc": "^2.2.4"
-  }
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fiftyk/ruxuwu-jin.git"
+  },
+  "keywords": [],
+  "author": "Your Name",
+  "license": "MIT"
 }
