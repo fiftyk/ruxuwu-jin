@@ -6,7 +6,35 @@ settings:
 
 importers:
 
-  .:
+  packages/demo:
+    dependencies:
+      vue:
+        specifier: ^3.5.13
+        version: 3.5.13(typescript@5.7.3)
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: ^5.2.1
+        version: 5.2.1(vite@6.2.0(@types/node@22.13.5)(terser@5.39.0))(vue@3.5.13(typescript@5.7.3))
+      '@vue/tsconfig':
+        specifier: ^0.7.0
+        version: 0.7.0(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
+      rollup-plugin-terser:
+        specifier: ^7.0.2
+        version: 7.0.2(rollup@4.34.8)
+      semantic-release:
+        specifier: ^24.2.3
+        version: 24.2.3(typescript@5.7.3)
+      typescript:
+        specifier: ~5.7.2
+        version: 5.7.3
+      vite:
+        specifier: ^6.2.0
+        version: 6.2.0(@types/node@22.13.5)(terser@5.39.0)
+      vue-tsc:
+        specifier: ^2.2.4
+        version: 2.2.4(typescript@5.7.3)
+
+  packages/jin:
     dependencies:
       vue:
         specifier: ^3.5.13

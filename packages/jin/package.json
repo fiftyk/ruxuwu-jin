@@ -2,14 +2,12 @@
   "name": "@ruxuwu/jin",
   "version": "0.1.2",
   "description": "A description of your package",
-  "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "unpkg": "dist/index.umd.js",
+  "unpkg": "dist/index.iife.js",
   "types": "dist/index.d.ts",
   "type": "module",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "preview": "vite preview",
     "build:umd": "vite build --config vite.umd.config.ts",
     "build:esm": "vite build --config vite.esm.config.ts --emptyOutDir false",
     "build": "npm run build:umd && npm run build:esm"
