@@ -2,15 +2,17 @@
   "name": "@ruxuwu/jin",
   "version": "0.1.2",
   "description": "A description of your package",
+  "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "unpkg": "dist/index.iife.js",
   "types": "dist/index.d.ts",
   "type": "module",
   "private": true,
   "scripts": {
-    "build:umd": "vite build --config vite.umd.config.ts",
+    "build:iife": "vite build --config vite.iife.config.ts",
+    "build:cjs": "vite build --config vite.cjs.config.ts --emptyOutDir false",
     "build:esm": "vite build --config vite.esm.config.ts --emptyOutDir false",
-    "build": "npm run build:umd && npm run build:esm"
+    "build": "npm run build:iife && npm run build:cjs && npm run build:esm"
   },
   "dependencies": {
     "vue": "^3.5.13"
