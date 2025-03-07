@@ -10,8 +10,8 @@ export class SimplePluginManager implements PluginManager {
         this.pluginContext = { ...this.pluginContext, ...context };
     }
 
-    async registerPlugin(manifest: PluginManifest, factory: () => Promise<JinPlugin>): Promise<void> {
-        const plugin = await factory();
+    async registerPlugin(manifest: PluginManifest, factory: (manifest: PluginManifest) => Promise<JinPlugin>): Promise<void> {
+        const plugin = await factory(manifest);
         this.plugins.set(manifest.id, plugin);
     }
 
@@ -42,6 +42,8 @@ export class SimplePluginManager implements PluginManager {
         const code = await response.text();
         const factory = new Function('module', code);
         const module = { exports: {} };
-        return factory(module);
+        factory(module); // 调用工厂函数以执行插件代码
+        const data = module.exports as JinPlugin; // 返回导出的插件
+        return data;
     }
 }
