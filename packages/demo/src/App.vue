@@ -1,22 +1,46 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+// 不再需要直接导入 HelloWorld 组件
 </script>
 
 <template>
-  <HelloWorld msg="Vite + Vue" />
+  <div class="app">
+    <header>
+      <nav>
+        <router-link to="/">首页</router-link> |
+        <router-link to="/about">关于</router-link>
+      </nav>
+    </header>
+    <main>
+      <router-view />
+    </main>
+  </div>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+nav {
+  padding: 30px;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
+}
+
+main {
+  padding: 20px;
 }
 </style>
