@@ -19,5 +19,6 @@ export interface PluginManager {
     activatePlugin(pluginId: string): Promise<void>;
     deactivatePlugin(pluginId: string): Promise<void>;
     loadPlugin(url: string): Promise<JinPlugin>;
+    setPluginContext(context: Partial<PluginContext>): void;
 }
 

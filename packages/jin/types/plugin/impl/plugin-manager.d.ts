@@ -1,6 +1,8 @@
-import type { PluginManager, PluginManifest, JinPlugin } from '../plugin-manager';
+import type { PluginManager, PluginManifest, JinPlugin, PluginContext } from '../plugin-manager';
 export declare class SimplePluginManager implements PluginManager {
     private plugins;
+    private pluginContext;
+    setPluginContext(context: Partial<PluginContext>): void;
     registerPlugin(manifest: PluginManifest, factory: () => Promise<JinPlugin>): Promise<void>;
     activatePlugin(pluginId: string): Promise<void>;
     deactivatePlugin(pluginId: string): Promise<void>;

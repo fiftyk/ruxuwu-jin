@@ -3,6 +3,12 @@ import type { PluginManager,  PluginManifest, JinPlugin, PluginContext } from '.
 export class SimplePluginManager implements PluginManager {
     
     private plugins: Map<string, JinPlugin> = new Map();
+    private pluginContext: PluginContext = {}; // 存储 PluginContext
+
+    // 新增方法：设置 PluginContext
+    setPluginContext(context: Partial<PluginContext>): void {
+        this.pluginContext = { ...this.pluginContext, ...context };
+    }
 
     async registerPlugin(manifest: PluginManifest, factory: () => Promise<JinPlugin>): Promise<void> {
         const plugin = await factory();
@@ -12,8 +18,7 @@ export class SimplePluginManager implements PluginManager {
     async activatePlugin(pluginId: string): Promise<void> {
         const plugin = this.plugins.get(pluginId);
         if (plugin) {
-            const context: PluginContext = {}; // 创建插件上下文
-            await plugin.activate(context);
+            await plugin.activate(this.pluginContext); // 使用存储的 PluginContext
         } else {
             throw new Error(`Plugin with id ${pluginId} not found.`);
         }
