@@ -1,7 +1,21 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+  "compilerOptions": {
+     "target": "ESNext",
+     "moduleResolution": "Node",
+     "declaration": true,
+     "emitDeclarationOnly": true,
+     "outDir": "./types",
+     "declarationDir": "./types",
+     "experimentalDecorators": true,
+     "esModuleInterop": true
+  },
+  "include": [
+      "src/**/*"
+  ],
+  "exclude": [
+      "node_modules",
+      "dist",
+      "types",
+      "src/**/*.test.ts"
   ]
 }
