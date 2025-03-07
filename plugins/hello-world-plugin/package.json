@@ -1,0 +1,32 @@
+{
+  "name": "@ruxuwu-plugins/hello-world-plugin",
+  "version": "0.1.0",
+  "description": "A hello world plugin for the Jin framework",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build": "rollup -c",
+    "clean": "rimraf dist"
+  },
+  "keywords": [
+    "plugin",
+    "jin",
+    "hello-world"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "rimraf": "^5.0.0",
+    "rollup": "^4.0.0",
+    "typescript": "~5.7.2",
+    "tslib": "^2.6.0"
+  },
+  "peerDependencies": {
+    "@ruxuwu/jin": "workspace:*"
+  }
+} 
