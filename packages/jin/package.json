@@ -6,7 +6,6 @@
   "module": "dist/index.es.js",
   "unpkg": "dist/index.iife.js",
   "types": "types/index.d.ts",
-  "private": true,
   "scripts": {
     "build:iife": "vite build --config vite.iife.config.ts",
     "build:esm": "vite build --config vite.esm.config.ts --emptyOutDir false",
