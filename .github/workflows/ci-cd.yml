@@ -24,14 +24,19 @@ jobs:
           npm install
 
       - name: Build project
-        run: npm run build
+        run: |
+          cd packages/jin
+          npm run build
 
       - name: Configure npm
         run: |
+          cd packages/jin
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
           echo "@ruxuwu:registry=https://registry.npmjs.org/" >> .npmrc
 
       - name: Publish to npm
-        run: npm publish --access public
+        run: |
+          cd packages/jin
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
