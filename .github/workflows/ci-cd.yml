@@ -19,13 +19,14 @@ jobs:
           node-version: '18' # 或者你需要的 Node.js 版本
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build project
-        run: npm run build
+        run: pnpm -F @ruxuwu/jin run build
 
       - name: Configure npm
         run: |
+          cd packages/jin
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
           echo "@ruxuwu:registry=https://registry.npmjs.org/" >> .npmrc
 
