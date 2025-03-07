@@ -13,6 +13,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ruxuwu/jin": "workspace:*",
     "vue": "^3.5.13"
   },
   "devDependencies": {
