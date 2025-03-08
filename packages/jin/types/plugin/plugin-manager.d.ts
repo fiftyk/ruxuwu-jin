@@ -1,4 +1,9 @@
+export interface Disposable {
+    dispose(): void;
+}
 export interface PluginContext {
+    subscriptions: Disposable[];
+    [key: string]: any;
 }
 export interface JinPlugin {
     activate(context: PluginContext): void | Promise<void>;

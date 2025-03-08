@@ -1,4 +1,11 @@
-export interface PluginContext {}
+export interface Disposable {
+    dispose(): void;
+}
+
+export interface PluginContext {
+    subscriptions: Disposable[];
+    [key: string]: any; // Allow for other context properties
+}
 
 export interface JinPlugin {
     activate(context: PluginContext): void | Promise<void>;
@@ -21,4 +28,5 @@ export interface PluginManager {
     loadPlugin(url: string): Promise<JinPlugin>;
     setPluginContext(context: Partial<PluginContext>): void;
 }
+
 

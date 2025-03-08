@@ -1,0 +1,15 @@
+{
+    "cSpell.words": [
+        "ruxuwu"
+    ],
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "vitest.enable": true,
+    "vitest.commandLine": "pnpm test:watch",
+    "vitest.include": [
+        "**/__tests__/**/*.test.ts"
+    ]
+}

@@ -7,7 +7,10 @@
      "outDir": "./types",
      "declarationDir": "./types",
      "experimentalDecorators": true,
-     "esModuleInterop": true
+     "esModuleInterop": true,
+     "types": [
+       "vitest/globals"
+     ]
   },
   "include": [
       "src/**/*"

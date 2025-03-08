@@ -7,14 +7,22 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# 测试相关
+coverage
+.nyc_output
+*.lcov
+
+# 构建产物
 dist
-dist-ssr
-*.local
+types
+
+# 依赖
+node_modules
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 .DS_Store
 *.suo
