@@ -1,6 +1,6 @@
 import { SimplePluginManager } from '../plugin-manager';
 import type { JinPlugin, PluginContext, PluginManifest, Disposable } from '../../plugin-manager';
-import { describe, test, expect, beforeEach } from 'vitest';
+import { describe, test, expect, beforeEach, vi } from 'vitest';
 
 // Mock plugin implementation
 class MockPlugin implements JinPlugin {
@@ -162,5 +162,61 @@ describe('SimplePluginManager', () => {
 
   test('should throw error when deactivating non-existent plugin', async () => {
     await expect(pluginManager.deactivatePlugin('non-existent')).rejects.toThrow();
+  });
+
+  test('should create context when activating plugin', async () => {
+    const manager = new SimplePluginManager();
+    const mockPlugin = {
+      activate: vi.fn()
+    };
+    const mockFactory = vi.fn().mockResolvedValue(mockPlugin);
+    const manifest = { id: 'test-plugin' } as PluginManifest;
+    
+    await manager.registerPlugin(manifest, mockFactory);
+    await manager.activatePlugin('test-plugin');
+    
+    expect(mockPlugin.activate).toHaveBeenCalled();
+    const context = mockPlugin.activate.mock.calls[0][0];
+    expect(context).toBeDefined();
+    expect(context.subscriptions).toEqual([]);
+  });
+
+  test('should update context with base context properties', async () => {
+    const manager = new SimplePluginManager();
+    const mockPlugin = {
+      activate: vi.fn()
+    };
+    const mockFactory = vi.fn().mockResolvedValue(mockPlugin);
+    const manifest = { id: 'test-plugin' } as PluginManifest;
+    
+    // 设置基础上下文
+    manager.setPluginContext({ foo: 'bar' });
+    
+    await manager.registerPlugin(manifest, mockFactory);
+    await manager.activatePlugin('test-plugin');
+    
+    const context = mockPlugin.activate.mock.calls[0][0];
+    expect(context.foo).toBe('bar');
+  });
+
+  test('should update existing context when base context changes', async () => {
+    const manager = new SimplePluginManager();
+    const mockPlugin = {
+      activate: vi.fn()
+    };
+    const mockFactory = vi.fn().mockResolvedValue(mockPlugin);
+    const manifest = { id: 'test-plugin' } as PluginManifest;
+    
+    await manager.registerPlugin(manifest, mockFactory);
+    await manager.activatePlugin('test-plugin');
+    
+    // 更新基础上下文
+    manager.setPluginContext({ newProp: 'value' });
+    
+    // 再次激活插件
+    await manager.activatePlugin('test-plugin');
+    
+    const context = mockPlugin.activate.mock.calls[1][0];
+    expect(context.newProp).toBe('value');
   });
 }); 
