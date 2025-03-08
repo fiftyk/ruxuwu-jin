@@ -1,24 +1,24 @@
 {
   "compilerOptions": {
-     "target": "ESNext",
-     "moduleResolution": "Node",
-     "declaration": true,
-     "emitDeclarationOnly": true,
-     "outDir": "./types",
-     "declarationDir": "./types",
-     "experimentalDecorators": true,
-     "esModuleInterop": true,
-     "types": [
-       "vitest/globals"
-     ]
+    "target": "ESNext",
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./types",
+    "declarationDir": "./types",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "types": [
+      "vitest/globals"
+    ]
   },
   "include": [
-      "src/**/*"
+    "src/**/*"
   ],
   "exclude": [
-      "node_modules",
-      "dist",
-      "types",
-      "src/**/*.test.ts"
+    "node_modules",
+    "dist",
+    "types",
+    "src/**/*.test.ts"
   ]
 }
