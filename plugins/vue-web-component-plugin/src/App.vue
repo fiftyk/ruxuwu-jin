@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.ce.vue'
 import TheWelcome from './components/TheWelcome.vue'
+import { defineCustomElement } from 'vue'
+
+console.log(HelloWorld.styles)
+
+customElements.define('pt-hello-world', defineCustomElement(HelloWorld))
+
+declare module 'vue' {
+    export interface GlobalComponents {
+      'pt-hello-world': typeof HelloWorld
+    }
+}
 </script>
 
 <template>
@@ -8,7 +19,7 @@ import TheWelcome from './components/TheWelcome.vue'
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <pt-hello-world msg="You did it!" />
     </div>
   </header>
 
