@@ -28,8 +28,13 @@ export class SimplePluginManager implements PluginManager {
         return context;
     }
 
-    async registerPlugin(manifest: PluginManifest): Promise<void> {
-        const plugin = await this.loadPlugin(manifest.url);
+    async registerPlugin(manifest: PluginManifest, factory?: (manifest: PluginManifest) => Promise<JinPlugin>): Promise<void> {
+        let plugin: JinPlugin;
+        if (manifest.url) {
+            plugin = await this.loadPlugin(manifest.url);
+        } else {
+            plugin = await factory(manifest);
+        }
         this.plugins.set(manifest.id, plugin);
         // 不再在注册时创建上下文
     }

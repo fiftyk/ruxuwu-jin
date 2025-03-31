@@ -87,6 +87,12 @@ export interface PluginManager {
      * @param manifest 插件清单，包含插件的基本信息
      */
     registerPlugin(manifest: PluginManifest): Promise<void>;
+    /**
+     * 注册插件
+     * @param manifest 插件清单，包含插件的基本信息
+     * @param factory 创建插件实例的工厂函数
+     */
+    registerPlugin(manifest: Omit<PluginManifest, 'url'>, factory: (manifest: PluginManifest) => Promise<JinPlugin>): Promise<void>;
 
     /**
      * 激活指定ID的插件

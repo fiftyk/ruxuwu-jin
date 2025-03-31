@@ -5,7 +5,7 @@ export declare class SimplePluginManager implements PluginManager {
     private pluginContexts;
     setPluginContext(context: Partial<PluginContext>): void;
     private createPluginContext;
-    registerPlugin(manifest: PluginManifest): Promise<void>;
+    registerPlugin(manifest: PluginManifest, factory?: (manifest: PluginManifest) => Promise<JinPlugin>): Promise<void>;
     activatePlugin(pluginId: string): Promise<void>;
     deactivatePlugin(pluginId: string): Promise<void>;
     /**
