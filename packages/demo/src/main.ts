@@ -14,6 +14,8 @@ await pluginManager.registerPlugin({
     name: 'Hello World Plugin',
     version: '0.1.0',
     url: 'http://localhost:3000/index.js', // 指向 HTTP 服务器提供的插件 JS 文件
+}, (manifest) => {
+    return pluginManager.loadPlugin(manifest.url);
 });
 
 await pluginManager.activatePlugin('hello-world-plugin');
