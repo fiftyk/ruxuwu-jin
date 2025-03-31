@@ -1,6 +1,6 @@
 {
   "name": "@ruxuwu/jin",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "type": "module",
   "description": "A description of your package",
   "module": "dist/index.es.js",
