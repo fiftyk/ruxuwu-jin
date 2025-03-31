@@ -28,7 +28,6 @@ else {
     window.__ruxuwu__.plugins.forEach((plugin) => {
         console.info(`Registering plugin ${plugin.id}`);
         // 动态加载插件
-        const factory = () => pluginManager.loadPlugin(plugin.url);
-        pluginManager.registerPlugin(plugin, factory);
+        pluginManager.registerPlugin(plugin);
     });
 }

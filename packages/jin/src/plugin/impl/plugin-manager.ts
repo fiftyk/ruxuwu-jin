@@ -1,7 +1,7 @@
 import type { PluginManager, PluginManifest, JinPlugin, PluginContext, Disposable } from '../plugin-manager';
 
 export class SimplePluginManager implements PluginManager {
-    
+
     private plugins: Map<string, JinPlugin> = new Map();
     private basePluginContext: Partial<PluginContext> = {}; // Base context with shared properties
     private pluginContexts: Map<string, PluginContext> = new Map(); // Individual contexts for each plugin
@@ -9,7 +9,7 @@ export class SimplePluginManager implements PluginManager {
     // 设置基础 PluginContext
     setPluginContext(context: Partial<PluginContext>): void {
         this.basePluginContext = { ...this.basePluginContext, ...context };
-        
+
         // Update all existing plugin contexts with the new base context
         for (const [pluginId, existingContext] of this.pluginContexts.entries()) {
             // 更新基础上下文属性
@@ -28,8 +28,8 @@ export class SimplePluginManager implements PluginManager {
         return context;
     }
 
-    async registerPlugin(manifest: PluginManifest, factory: (manifest: PluginManifest) => Promise<JinPlugin>): Promise<void> {
-        const plugin = await factory(manifest);
+    async registerPlugin(manifest: PluginManifest): Promise<void> {
+        const plugin = await this.loadPlugin(manifest.url);
         this.plugins.set(manifest.id, plugin);
         // 不再在注册时创建上下文
     }
@@ -42,7 +42,7 @@ export class SimplePluginManager implements PluginManager {
             if (!context) {
                 context = this.createPluginContext(pluginId);
             }
-            
+
             await plugin.activate(context);
         } else {
             throw new Error(`Plugin with id ${pluginId} not found.`);
@@ -56,7 +56,7 @@ export class SimplePluginManager implements PluginManager {
             if (plugin.deactivate) {
                 await plugin.deactivate();
             }
-            
+
             // Then dispose all subscriptions registered by this plugin
             const context = this.pluginContexts.get(pluginId);
             if (context && context.subscriptions) {
@@ -67,7 +67,7 @@ export class SimplePluginManager implements PluginManager {
                         console.error(`Error disposing subscription for plugin ${pluginId}:`, error);
                     }
                 }
-                
+
                 // Clear the subscriptions array but keep the context
                 context.subscriptions = [];
             }
