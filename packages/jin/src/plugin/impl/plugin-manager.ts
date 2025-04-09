@@ -88,10 +88,13 @@ export class SimplePluginManager implements PluginManager {
     async loadPlugin(url: string): Promise<JinPlugin> {
         const response = await fetch(url);
         const code = await response.text();
-        const factory = new Function('module', code);
-        const module = { exports: {} };
-        factory(module); // 调用工厂函数以执行插件代码
-        const data = module.exports as JinPlugin; // 返回导出的插件
-        return data;
+        const factory = new Function('module', 'exports', 'require', code);
+        const _exports = {};
+        const _module = { exports: _exports };
+        const _require = (request: string) => {
+            console.warn(`Cannot load module '${request}'`);
+		}
+        factory(_module, _exports, _require); // 调用工厂函数以执行插件代码
+        return <JinPlugin>(_module.exports !== _exports ? _module.exports : _exports);// 返回导出的插件
     }
 }
