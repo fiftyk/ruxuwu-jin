@@ -88,15 +88,36 @@ export class SimplePluginManager implements PluginManager {
      * @param url 插件的 url
      */
     async loadPlugin(url: string): Promise<JinPlugin> {
-        const response = await fetch(url);
-        const code = await response.text();
-        const factory = new Function('module', 'exports', 'require', code);
-        const _exports = {};
-        const _module = { exports: _exports };
-        const _require = (request: string) => {
-            console.warn(`Cannot load module '${request}'`);
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch plugin: ${response.status} ${response.statusText}`);
+            }
+
+            const code = await response.text();
+            const factory = new Function('module', 'exports', 'require', code);
+            const _exports = {};
+            const _module = { exports: _exports };
+
+            // 提供一个更有用的require实现
+            const _require = (request: string) => {
+                console.warn(`Plugin attempted to load module '${request}', but external modules are not supported`);
+                return {}; // 返回空对象而不是undefined，减少运行时错误
+            };
+
+            factory(_module, _exports, _require);
+
+            const pluginExport = <JinPlugin>(_module.exports !== _exports ? _module.exports : _exports);
+
+            // 验证插件实现了必要的接口
+            if (!pluginExport || typeof pluginExport.activate !== 'function') {
+                throw new Error('Invalid plugin: missing required activate method');
+            }
+
+            return pluginExport as JinPlugin;
+        } catch (error) {
+            console.error('Error loading plugin:', error);
+            throw new Error(`Failed to load plugin from ${url}: ${error.message}`);
         }
-        factory(_module, _exports, _require); // 调用工厂函数以执行插件代码
-        return <JinPlugin>(_module.exports !== _exports ? _module.exports : _exports);// 返回导出的插件
     }
 }
