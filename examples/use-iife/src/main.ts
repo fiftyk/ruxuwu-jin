@@ -2,12 +2,9 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 import router from './router'
-import { SimplePluginManager } from '@ruxuwu/jin';
-import { routerRegister } from './services/router-register';
+import { initializePluginManager } from './plugin-context';
 
-const pluginManager = new SimplePluginManager();
-
-pluginManager.setPluginContext({ routerRegister })
+const pluginManager = initializePluginManager();
 
 await pluginManager.registerPlugin({
     id: 'hello-world-plugin',
