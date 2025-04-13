@@ -32,8 +32,10 @@ export class SimplePluginManager implements PluginManager {
         let plugin: JinPlugin;
         if (manifest.url) {
             plugin = await this.loadPlugin(manifest.url);
-        } else {
+        } else if (factory) {
             plugin = await factory(manifest);
+        } else {
+            throw new Error(`Cannot register plugin ${manifest.id}: neither URL nor factory provided`);
         }
         this.plugins.set(manifest.id, plugin);
         // 不再在注册时创建上下文
@@ -93,7 +95,7 @@ export class SimplePluginManager implements PluginManager {
         const _module = { exports: _exports };
         const _require = (request: string) => {
             console.warn(`Cannot load module '${request}'`);
-		}
+        }
         factory(_module, _exports, _require); // 调用工厂函数以执行插件代码
         return <JinPlugin>(_module.exports !== _exports ? _module.exports : _exports);// 返回导出的插件
     }
