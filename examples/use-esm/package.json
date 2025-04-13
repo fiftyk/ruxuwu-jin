@@ -1,5 +1,5 @@
 {
-  "name": "@ruxuwu/example",
+  "name": "use-esm",
   "version": "0.1.2",
   "description": "A description of your package",
   "main": "dist/index.js",
