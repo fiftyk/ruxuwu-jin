@@ -5,6 +5,7 @@ export class SimplePluginManager implements PluginManager {
     private plugins: Map<string, JinPlugin> = new Map();
     private basePluginContext: Partial<PluginContext> = {}; // Base context with shared properties
     private pluginContexts: Map<string, PluginContext> = new Map(); // Individual contexts for each plugin
+    private modules: Map<string, any> = new Map(); // Custom modules registry
 
     // 设置基础 PluginContext
     setPluginContext(context: Partial<PluginContext>): void {
@@ -84,6 +85,15 @@ export class SimplePluginManager implements PluginManager {
     }
 
     /**
+     * 注册自定义模块
+     * @param moduleName 模块名称
+     * @param module 模块对象
+     */
+    registerModule(moduleName: string, module: any): void {
+        this.modules.set(moduleName, module);
+    }
+
+    /**
      * 加载 commonjs 模块
      * @param url 插件的 url
      */
@@ -99,9 +109,15 @@ export class SimplePluginManager implements PluginManager {
             const _exports = {};
             const _module = { exports: _exports };
 
-            // 提供一个更有用的require实现
+            // 提供支持自定义模块的require实现
             const _require = (request: string) => {
-                console.warn(`Plugin attempted to load module '${request}', but external modules are not supported`);
+                // 首先检查是否注册了该模块
+                if (this.modules.has(request)) {
+                    return this.modules.get(request);
+                }
+                
+                // 如果没有找到注册的模块，记录警告并返回空对象
+                console.warn(`Plugin attempted to load module '${request}', but it's not registered`);
                 return {}; // 返回空对象而不是undefined，减少运行时错误
             };
 

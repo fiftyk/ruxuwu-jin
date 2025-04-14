@@ -88,6 +88,12 @@ export interface PluginManager {
      */
     registerPlugin(manifest: PluginManifest): Promise<void>;
     /**
+     * 注册自定义模块
+     * @param moduleName 模块名称
+     * @param module 模块对象
+     */
+    registerModule(moduleName: string, module: any): void;
+    /**
      * 注册插件
      * @param manifest 插件清单，包含插件的基本信息
      * @param factory 创建插件实例的工厂函数
